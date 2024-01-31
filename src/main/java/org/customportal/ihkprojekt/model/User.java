@@ -1,5 +1,6 @@
 package org.customportal.ihkprojekt.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,9 +29,11 @@ public class User {
     private List<Favorite> favoriteSet;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Customizing> customizings;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-comment")
     private List<Comment> comments;
 
 

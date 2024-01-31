@@ -1,5 +1,6 @@
 package org.customportal.ihkprojekt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,8 @@ public class Tag {
 
     private String tagname;
 
-    @ManyToMany
-    private List<Comment> comments;
+    @ManyToMany(mappedBy = "tags")
+    @JsonBackReference
+    private List<Customizing> customizings;
 
 }

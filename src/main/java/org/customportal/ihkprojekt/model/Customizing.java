@@ -1,5 +1,7 @@
 package org.customportal.ihkprojekt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +25,20 @@ public class Customizing {
     private String content;
 
     @ManyToMany
+    @JoinTable(
+            name= "customizing_tags",
+            joinColumns = @JoinColumn(name="customizing_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @JsonManagedReference
     private List<Tag> tags;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customizing")
+    @JsonManagedReference(value = "customizing-comment")
     private List<Comment> comments;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 }
