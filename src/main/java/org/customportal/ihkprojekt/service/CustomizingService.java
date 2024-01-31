@@ -33,14 +33,14 @@ public class CustomizingService {
         return customizingRepository.findById(id);
     }
 
-    public Customizing addNewCustomizing(long id, String content, String title, List<Tag> tags, List<Comment> comments){
+    public Customizing addNewCustomizing(long id, String title, String content, List<Tag> tags, List<Comment> comments){
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("User not found"));
 
         Customizing customizing = new Customizing();
         customizing.setUser(user);
-        customizing.setContent(content);
         customizing.setTitel(title);
+        customizing.setContent(content);
         customizing.setTags(tags);
         customizing.setComments(comments);
         return customizingRepository.save(customizing);

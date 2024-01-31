@@ -1,5 +1,6 @@
 package org.customportal.ihkprojekt.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class Favorite {
     private long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference(value= "user-favorite")
     private User user;
     @ManyToOne
     private Customizing customizing;

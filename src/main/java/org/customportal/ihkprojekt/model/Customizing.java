@@ -30,15 +30,15 @@ public class Customizing {
             joinColumns = @JoinColumn(name="customizing_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    @JsonManagedReference
+    //@JsonManagedReference(value = "customizing-tags")
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "customizing")
+    @OneToMany(mappedBy = "customizing", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference(value = "customizing-comment")
     private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference(value = "user-customizing")
     private User user;
 }
