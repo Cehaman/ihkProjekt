@@ -1,6 +1,7 @@
 package org.customportal.ihkprojekt.controller;
 
 
+import org.customportal.ihkprojekt.dto.TagDto;
 import org.customportal.ihkprojekt.model.Customizing;
 import org.customportal.ihkprojekt.model.Tag;
 import org.customportal.ihkprojekt.service.CustomizingService;
@@ -26,23 +27,23 @@ public class TagController {
     }
 
     @GetMapping("/all")
-    public List<Tag> getAllTags() {
+    public List<TagDto> getAllTags() {
         return tagService.getAllTags();
     }
 
     @GetMapping("/{tagid}")
-    public Optional<Tag> getTagById(@PathVariable long id){
-        return tagService.getTagById(id);
+    public Optional<TagDto> getTagById(@PathVariable long tagid){
+        return tagService.getTagById(tagid);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Tag> addNewTag(@RequestBody Tag tag) {
-        tagService.saveNewTag(tag);
-        return ResponseEntity.ok(tag);
+    public ResponseEntity<Tag> addNewTag(@RequestBody TagDto tagDto) {
+        tagService.saveNewTag(tagDto);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{tagid}/{customizingId}")
-    public Tag addTagToCustomizing(@PathVariable long tagid, @PathVariable long customizingId){
+    public TagDto addTagToCustomizing(@PathVariable long tagid, @PathVariable long customizingId){
        return tagService.addTagToCustomizing(tagid, customizingId);
     }
 

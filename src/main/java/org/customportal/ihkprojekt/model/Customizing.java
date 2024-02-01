@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,7 +23,24 @@ public class Customizing {
 
     private String titel;
     @Lob
+    @Column(name = "content", columnDefinition = "longtext")
     private String content;
+
+    @Column(name="created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name="updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     @ManyToMany
     @JoinTable(
@@ -34,11 +52,9 @@ public class Customizing {
     private List<Tag> tags;
 
     @OneToMany(mappedBy = "customizing", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "customizing-comment")
     private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference(value = "user-customizing")
     private User user;
 }

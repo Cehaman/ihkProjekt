@@ -1,6 +1,7 @@
 package org.customportal.ihkprojekt.controller;
 
 
+import org.customportal.ihkprojekt.dto.CommentDto;
 import org.customportal.ihkprojekt.model.Comment;
 import org.customportal.ihkprojekt.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +21,26 @@ public class CommentController {
         commentService = comservice;
     }
 
-    @GetMapping("/all")
-    public List<Comment> getAllComments(){
-        return commentService.getAllComments();
+    @GetMapping("/customizings/{customizingid}")
+    public List<CommentDto> getAllCommentsByCustomizingId(@PathVariable Long customizingid){
+        return commentService.getAllCommentsByCustomizingId(customizingid);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comment> getCommentById(@PathVariable long id){
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable long id){
         return commentService.getCommandById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(value = "/{userid}/{customizingid}/add", consumes = "application/json")
-    public Comment createComment(@PathVariable long userid,@PathVariable long customizingid, @RequestBody Comment comment){
-        return commentService.createComment(userid, customizingid, comment.getTitle(), comment.getContent());
+    @PostMapping("/{userid}/{customizingid}/add")
+    public CommentDto createComment(@PathVariable long userid,@PathVariable long customizingid, @RequestBody CommentDto commentDto){
+        return commentService.createComment(userid, customizingid, commentDto.getTitle(), commentDto.getContent());
     }
 
     @DeleteMapping("/{commentid}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long id) {
-        commentService.deleteCommentById(id);
+    public ResponseEntity<Void> deleteComment(@PathVariable long commentid) {
+        commentService.deleteCommentById(commentid);
         return ResponseEntity.ok().build();
     }
 

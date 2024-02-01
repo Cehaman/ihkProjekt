@@ -11,11 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FavoriteDto {
 
-    private Long id;
+    private Long favoriteId;
 
     private String favoritenTitle;
 
     private Long customizingId;
+
+    private Long userId;
 
 
 }

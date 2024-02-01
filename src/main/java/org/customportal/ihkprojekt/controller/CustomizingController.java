@@ -2,6 +2,7 @@ package org.customportal.ihkprojekt.controller;
 
 
 import org.apache.coyote.Response;
+import org.customportal.ihkprojekt.dto.CustomizingDto;
 import org.customportal.ihkprojekt.model.Customizing;
 import org.customportal.ihkprojekt.service.CustomizingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +24,20 @@ public class CustomizingController {
     }
 
     @GetMapping("/all")
-    public List<Customizing> getAllCustomizings(){
+    public List<CustomizingDto> getAllCustomizings(){
         return customizingService.getAllCustomizings();
     }
 
     @GetMapping("/{id}")
-    public Optional<Customizing> getCustomizingById(@PathVariable Long id){
+    public Optional<CustomizingDto> getCustomizingById(@PathVariable Long id){
         return customizingService.getCustomizingById(id);
     }
 
     @PostMapping("/{id}/add")
-    public ResponseEntity<Customizing> addCustomizing(@PathVariable long id, @RequestBody Customizing customizing){
-        Customizing custom = customizingService.addNewCustomizing(
-                id,
-                customizing.getTitel(),
-                customizing.getContent(),
-                customizing.getTags(),
-                customizing.getComments()
-        );
-        return ResponseEntity.ok(custom);
+    public ResponseEntity<CustomizingDto> addCustomizing(@PathVariable long id, @RequestBody CustomizingDto customizingDto){
+
+        CustomizingDto savedCustomDto =  customizingService.addNewCustomizing(id, customizingDto.getTitle(), customizingDto.getContent());
+        return ResponseEntity.ok(savedCustomDto);
     }
 
     @DeleteMapping("/delete/{id}")

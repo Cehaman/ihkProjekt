@@ -27,15 +27,15 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value= "user-favorite")
+    //@JsonManagedReference(value= "user-favorite")
     private List<Favorite> favoriteSet;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value = "user-customizing")
+    //@JsonManagedReference(value = "user-customizing")
     private List<Customizing> customizings;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference(value = "user-comment")
+    //@JsonManagedReference(value = "user-comment")
     private List<Comment> comments;
 
 
